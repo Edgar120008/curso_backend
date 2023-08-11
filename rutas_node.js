@@ -13,8 +13,6 @@ const server = http.createServer((req, res) => {
     }
   } else if (req.method === 'POST') {
     if (req.url === '/usuarios') {
-      // Manejar POST para /usuarios
-      // ... parsear datos y guardar en la base de datos, por ejemplo ...
       res.writeHead(201, { 'Content-Type': 'text/plain' });
       res.end('Usuario creado con éxito');
     }
