@@ -7,17 +7,20 @@ app.get('/', (req, res)=>{
     res.send('Hola clase');
 });
 
-app.post('/crearUsuarios/:id', (req, res)=>{
+app.post('/crearUsuarios/:id/:name', (req, res)=>{
     const userID = parseInt(req.params.id);
-    res.send(`Felicidades creo el User nuevo con el id: ${userID}...`)
+    let N = req.params.name;
+    res.send(`Felicidades creo el User nuevo con el id: ${userID} y el nombre ${N}...`)
 })
-app.put('/actualizarUser/:id', (req, res)=>{
+app.put('/actualizarUser/:id/:name', (req, res)=>{
     const User=parseInt(req.params.id);
-    res.send(`El usuario con el id: ${User} fue modificado`)
+    let Nombre = req.params.name;
+    res.send(`El usuario con el id: ${User} fue modificado con el nombre ${Nombre}`)
 })
-app.delete('/EliminarUser/:id', (req, res)=>{
+app.delete('/EliminarUser/:id/:name', (req, res)=>{
     const Borrar=parseInt(req.params.id);
-    res.send(`El usario ${Borrar} fue eliminado`)
+    let Name=req.params.name;
+    res.send(`El usario ${Borrar} con el nombre ${Name} fue eliminado`)
 })
 
 app.listen(PORT,()=>{
