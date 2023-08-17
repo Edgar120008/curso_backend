@@ -1,28 +1,31 @@
-const express = require('express');
+const express = require ('express');
 const app = express();
-
 const PORT = 3000;
 
-app.get('/', (req, res)=>{
-    res.send('Hola clase');
+// middleware para parserar JSON en las solicitudes
+app.use(express.json());
+
+// midleware perzonalizado para registrar solicitudes
+app.use((req, res, next)=>{
+  console.log(`Solicitud recibida en ${new Date()}`)
+  next();
+})
+
+// middleware perzonalizado para autnticacion basica
+const auth = (req, res, next) =>{
+  const palabra = req.headers.authorization;
+
+  if(palabra==='llave'){
+    next(); //continua si el valor de la palabra es la correcta
+  }else{
+    res.status(401).json({error:'el valor de la palabra no es correcto'});
+  }
+};
+
+app.get('/ruta/palabra', auth, (req, res)=>{
+  res.json({mensaje: 'se ingreso con exito a la ruta'});
 });
 
-app.post('/crearUsuarios/:id', (req, res)=>{
-    const userID = parseInt(req.params.id);
-    res.send(`felicidades creo un usuario nuevo con el id:${userID}`);
-})
-
-app.put('/usuarios/:id', (req, res) => {
-    const userId = req.params.id;
-    res.send(`Usuario ${userId} actualizado con éxito`);
-  });
-
-  app.delete('/usuarios/:id', (req, res) => {
-    const userId = req.params.id;
-    res.send(`Usuario ${userId} eliminado con éxito`);
-  });
-
-
 app.listen(PORT, ()=>{
-    console.log(`Servidor escuchando en el puerto ${PORT}`)
-})
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
+});
