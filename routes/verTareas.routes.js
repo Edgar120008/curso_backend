@@ -5,12 +5,14 @@ const {verTareas,
        editarTarea, 
        borrarTarea}  = require('../controllers/verTareas.controllers')
 
+const auth = require('../middleware/autorizacion_basica.middleware')
+
 const router = Router();
 
-router.get('/verTareas', verTareas)
-router.get('/tarea/:id', verTareaPorId)
+router.get('/verTareas', [auth], verTareas);
+router.get('/tarea/:id', verTareaPorId);
 
-router.post('/creaTarea', crearTarea)
+router.post('/creaTarea', crearTarea);
 
 router.put('/actualizarTarea/:id',editarTarea);
 
